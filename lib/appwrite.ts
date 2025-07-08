@@ -1,21 +1,14 @@
-import { Account, Client, Databases } from "appwrite"
+import { Account, Client, Databases, Storage, Functions } from "appwrite"
 
-const endpoint = process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT
-const project = process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID
+const client = new Client()
 
-console.log(endpoint, project)
+client
+    .setEndpoint(String(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT))
+    .setProject(String(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID))
 
-if (!endpoint || !project) {
-  throw new Error("Appwrite environment variables are missing")
-}
+const account = new Account(client)
+const databases = new Databases(client)
+const storage = new Storage(client)
+const functions = new Functions(client)
 
-const client = new Client().setEndpoint(endpoint).setProject(project)
-
-// Export the account instance
-export const account = new Account(client)
-
-// Export the database instance
-export const databases = new Databases(client)
-
-// Export the client for further use
-export { client }
+export { client, account, databases, storage, functions }

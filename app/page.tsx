@@ -15,9 +15,6 @@ export default function Home() {
           <Button asChild size="lg" className="w-full">
             <Link href="/auth/login">Login</Link>
           </Button>
-          <Button asChild variant="outline" size="lg" className="w-full">
-            <Link href="/auth/register">Register</Link>
-          </Button>
         </div>
       </div>
     </div>

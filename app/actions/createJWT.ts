@@ -1,6 +1,5 @@
 import { Account, Client } from "appwrite"
 
-
 export async function createJWT() {
     const client = new Client()
       .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
