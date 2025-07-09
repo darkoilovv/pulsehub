@@ -63,7 +63,7 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
                 )}
             >
                 {/* Header with close button on mobile */}
-                <div className="p-4 border-b">
+                <div className="p-4 border-b h-[65px]">
                     <div className="text-primary flex items-center justify-center">
                         <div className="text-primary font-bold text-xl flex items-center gap-1.5 mb-0.5 mt-0.5">
                             <Image

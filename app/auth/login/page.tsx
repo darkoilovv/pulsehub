@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { ArrowRight, Mail, Lock, User, AlertCircle, Building2, Eye, EyeOff, Check, X } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { account } from "@/lib/appwrite"
+import { account, teams } from "@/lib/appwrite"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -164,6 +164,22 @@ export default function AuthPage() {
         try {
             await account.create(ID.unique(), registerEmail, registerPassword, registerName)
             await account.createEmailPasswordSession(registerEmail, registerPassword)
+
+            await account.updatePrefs({
+                userType: userType,
+                companyName: userType === "business" ? companyName : null,
+            })
+
+            if (userType === "business") {
+                const user = await account.get()
+                const team = await teams.create(ID.unique(), companyName || registerName)
+
+                // Store the team ID in the current user's preferences
+                await account.updatePrefs({
+                    ...user.prefs,
+                    teamId: team.$id,
+                })
+            }
 
             const jwt = await createJWT()
             if (!jwt) throw new Error("JWT creation failed")
